@@ -1,4 +1,4 @@
-name: infoblox
-summary: Basic infoblox interface
+name: keystone-ico
+summary: Basic keystone-ico interface
 version: 1
-repo: https://github.com/mskalka/interface-infoblox
+repo: https://github.com/mskalka/interface-keystone-ico
