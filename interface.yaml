@@ -1,0 +1,4 @@
+name: infoblox
+summary: Basic infoblox interface
+version: 1
+repo: https://github.com/mskalka/interface-infoblox
