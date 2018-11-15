@@ -8,7 +8,6 @@ from charms.reactive import scopes
 
 
 class KeystoneIcoProvides(RelationBase):
-
     scope = scopes.GLOBAL
 
     @hook('{provides:keystone-ico}-relation-joined')
@@ -35,10 +34,36 @@ class KeystoneIcoProvides(RelationBase):
         self.remove_state('{relation_name}.available')
         self.remove_state('{relation_name}.connected')
 
-    def configure_principal(self, token=None):
+    def configure_principal(self, service_name=None, token=None):
         """Send principle keystone-ico token"""
         conv = self.conversation()
-        relation_info = {
-            'token-secret': token,
-        }
+        relation_info = {"service_name": service_name,
+                         "keystone_conf": {
+                             "extra_config": {
+                                 "header": "authentication",
+                                 "body": {
+                                     "simple_token_header": "SimpleToken",
+                                     "simple_token_secret": token
+                                 },
+                             },
+                             "auth": {
+                                 "methods": "external,password,token,oauth1",
+                                 "extra_config": {
+                                     "external": "keystone.auth.plugins.external.Domain",
+                                 },
+                             },
+                         },
+                         "paste_ini": {
+                             "pipeline": "cors sizelimit url_normalize request_id build_auth_context token_auth "
+                                         "json_body simpletoken ec2_extension public_service",
+                             "extra_config": {
+                                 "header": "filter:simpletoken",
+                                 "body": {
+                                     "paste.filter_factory":
+                                         "keystone.middleware.simpletoken:SimpleTokenAuthentication.factory"
+                                 }
+                             },
+                         },
+
+                         }
         conv.set_remote(**relation_info)
