@@ -19,15 +19,15 @@ from charms.reactive import RelationBase
 from charms.reactive import scopes
 
 
-class KeystoneIcoRequires(RelationBase):
+class KeystoneMiddlewareRequires(RelationBase):
     scope = scopes.GLOBAL
 
-    @hook('{requires:keystone-ico}-relation-{joined,changed}')
+    @hook('{requires:keystone-middleware}-relation-{joined,changed}')
     def changed(self):
         self.set_state('{relation_name}.connected')
         self.set_state('{relation_name}.available')
 
-    @hook('{requires:keystone-ico}-relation-{departed,broken}')
+    @hook('{requires:keystone-middleware}-relation-{departed,broken}')
     def departed(self):
         self.remove_state('{relation_name}.connected')
         self.remove_state('{relation_name}.available')

@@ -1,4 +1,4 @@
-name: keystone-ico
-summary: Basic keystone-ico interface
+name: keystone-middleware
+summary: Basic keystone-middleware interface
 version: 1
-repo: https://github.com/mskalka/interface-keystone-ico
+repo: https://github.com/aym-frikha/interface-keystone-middleware.git
