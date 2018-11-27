@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
 import json
-
+import os
 from charms.reactive import RelationBase
 from charms.reactive import hook
 from charms.reactive import scopes
-
+from charmhelpers.core import hookenv
 
 class KeystoneMiddlewareProvides(RelationBase):
     scope = scopes.GLOBAL
@@ -34,10 +34,7 @@ class KeystoneMiddlewareProvides(RelationBase):
         self.remove_state('{relation_name}.available')
         self.remove_state('{relation_name}.connected')
 
-    def configure_principal(self, service_name=None, keystone_conf=None):
+    def configure_principal(self, **relation_info):
         """Send principle keystone-middleware configuration"""
         conv = self.conversation()
-        relation_info = {"service_name": service_name,
-                         "keystone_conf": keystone_conf
-                         }
         conv.set_remote(**relation_info)
