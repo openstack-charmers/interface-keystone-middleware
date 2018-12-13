@@ -23,8 +23,6 @@ class KeystoneMiddlewareProvides(RelationBase):
         conv.remove_state('{relation_name}.configured')
         if conv.get_remote('configured'):
             conv.set_state('{relation_name}.configured')
-        if conv.get_remote('create-defs'):
-            conv.set_state('keystone-middleware.create-defs')
 
     @hook('{provides:keystone-middleware}-relation-{broken, departed}')
     def keystone_middleware_departed(self):
